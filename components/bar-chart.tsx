@@ -43,7 +43,7 @@ export default function BarChart({
             : -100,
       max:
         selectedKey === "altitude"
-          ? 50000
+          ? 0
           : selectedKey === "temperature"
             ? 30
             : 100,

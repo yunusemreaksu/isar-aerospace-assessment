@@ -3,15 +3,19 @@
 import BarChart from "@/components/bar-chart";
 import { ReloadIcon, RocketIcon } from "@radix-ui/react-icons";
 import {
+  AlertDialog,
+  Badge,
   Box,
   Button,
   Card,
   Flex,
   Heading,
+  Separator,
   Strong,
   Text,
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SpectrumStatus } from "../types";
 
 type Props = {
@@ -25,8 +29,39 @@ type selectedKey = "velocity" | "altitude" | "temperature";
 
 export default function HomeClient({ data, keysWithColors }: Props) {
   const { refresh } = useRouter();
+  const [liveData, setLiveData] = useState<SpectrumStatus>({
+    velocity: 0,
+    altitude: 0,
+    temperature: 0,
+    statusMessage: "",
+    isAscending: false,
+    isActionRequired: false,
+  });
+
+  useEffect(() => {
+    const ws = new WebSocket(
+      "wss://webfrontendassignment-isaraerospace.azurewebsites.net/api/SpectrumWS",
+    );
+
+    ws.onopen = () => {
+      console.log("Websocket connected!");
+    };
+
+    ws.onmessage = (event) => {
+      const parsedData = JSON.parse(event.data);
+      setLiveData({
+        velocity: parsedData.Velocity,
+        altitude: parsedData.Altitude,
+        temperature: parsedData.Temperature,
+        statusMessage: parsedData.StatusMessage,
+        isAscending: parsedData.IsAscending,
+        isActionRequired: parsedData.IsActionRequired,
+      });
+    };
+  }, []);
+
   return (
-    <Flex direction={"column"} gap={"8"}>
+    <Flex direction={"column"} gap={"8"} align={"center"}>
       <Flex justify={"center"} align={"center"} gap={"4"}>
         <Flex justify={"center"} align={"center"} gap={"2"}>
           <RocketIcon color="red" />
@@ -35,7 +70,7 @@ export default function HomeClient({ data, keysWithColors }: Props) {
           </Heading>
         </Flex>
         <Button onClick={() => refresh()} className="hover:cursor-pointer">
-          <ReloadIcon /> Refresh
+          <ReloadIcon /> Refresh Data
         </Button>
       </Flex>
       <Flex
@@ -49,29 +84,55 @@ export default function HomeClient({ data, keysWithColors }: Props) {
         {keysWithColors.map((item) => (
           <Box key={item.key}>
             <BarChart
-              chartData={data}
+              chartData={liveData}
               selectedKey={item.key as selectedKey}
               colorVariant={item.color}
             />
           </Box>
         ))}
       </Flex>
-      <Card style={{ maxWidth: 500 }}>
+      <Card style={{ width: 600 }}>
         <Flex direction={"column"} gap={"2"}>
           <Heading as="h2">Information</Heading>
+          <Separator my="1" size="4" />
           <Flex direction={"row"} gap={"2"}>
             <Strong>Message:</Strong>
-            <Text>{data.statusMessage}</Text>
+            <Text>{liveData.statusMessage}</Text>
           </Flex>
           <Flex direction={"row"} gap={"2"}>
             <Strong>Phase of Flight:</Strong>
-            <Text>{data.isAscending ? "Ascending" : "Descending"}</Text>
+            <Text>{liveData.isAscending ? "Ascending" : "Descending"}</Text>
           </Flex>
-          <Flex direction={"row"} gap={"2"}>
+          <Flex direction={"row"} gap={"2"} align={"center"}>
             <Strong>Action Reqired:</Strong>
-            <Text color={data.isActionRequired ? "red" : "blue"}>
-              {data.isActionRequired ? "YES" : "NO"}
-            </Text>
+            {liveData.isActionRequired ? (
+              <AlertDialog.Root>
+                <AlertDialog.Trigger>
+                  <Button color="red" className="hover:cursor-pointer">
+                    YES
+                  </Button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content style={{ maxWidth: 450 }}>
+                  <AlertDialog.Title>Action Required!</AlertDialog.Title>
+                  <AlertDialog.Description size="2">
+                    Something went wrong!
+                  </AlertDialog.Description>
+                  <AlertDialog.Cancel>
+                    <Flex justify={"end"} mt="4">
+                      <Button
+                        variant="soft"
+                        color="gray"
+                        className="hover:cursor-pointer"
+                      >
+                        Cancel
+                      </Button>
+                    </Flex>
+                  </AlertDialog.Cancel>
+                </AlertDialog.Content>
+              </AlertDialog.Root>
+            ) : (
+              <Badge color="blue">NO</Badge>
+            )}
           </Flex>
         </Flex>
       </Card>
