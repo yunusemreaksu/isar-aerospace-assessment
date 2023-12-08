@@ -39,13 +39,13 @@ export default function BarChart({
         selectedKey === "altitude"
           ? -50000
           : selectedKey === "temperature"
-            ? -50
+            ? -30
             : -100,
       max:
         selectedKey === "altitude"
           ? 50000
           : selectedKey === "temperature"
-            ? 50
+            ? 30
             : 100,
     },
   };
