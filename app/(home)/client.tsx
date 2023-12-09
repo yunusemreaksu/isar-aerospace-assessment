@@ -3,9 +3,12 @@
 import BarChart from "@/components/bar-chart";
 import LoadingSpinner from "@/components/loading-spinner";
 import { keysWithColors } from "@/constants";
-import { ReloadIcon, RocketIcon } from "@radix-ui/react-icons";
 import {
-  AlertDialog,
+  ExclamationTriangleIcon,
+  ReloadIcon,
+  RocketIcon,
+} from "@radix-ui/react-icons";
+import {
   Badge,
   Box,
   Button,
@@ -39,9 +42,8 @@ export default function HomeClient() {
     isAscending: false,
     isActionRequired: false,
   });
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleClick = async () => {
+  const handleReloadButtonClick = async () => {
     setIsLoading(true);
 
     try {
@@ -63,7 +65,7 @@ export default function HomeClient() {
 
       setInitialData(result);
     } catch (error) {
-      setErrorMessage(error as string);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -97,6 +99,26 @@ export default function HomeClient() {
   const textColor = isActionRequired ? "red" : "blue";
   const textWeight = isActionRequired ? "bold" : "medium";
 
+  const handleActButtonClick = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_ACT_ON_SPECTRUM as string,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -109,11 +131,6 @@ export default function HomeClient() {
         />
       ) : (
         <Flex direction={"column"} gap={"8"} align={"center"}>
-          {errorMessage && (
-            <Text weight={"bold"} color="red">
-              {errorMessage}
-            </Text>
-          )}
           <Flex justify={"center"} align={"center"} gap={"4"}>
             <Flex justify={"center"} align={"center"} gap={"2"}>
               <RocketIcon color="red" />
@@ -121,9 +138,22 @@ export default function HomeClient() {
                 Spectrum Status
               </Heading>
             </Flex>
-            <Button onClick={handleClick} className="hover:cursor-pointer">
-              <ReloadIcon /> Refresh Data
+            <Button
+              onClick={handleReloadButtonClick}
+              className="hover:cursor-pointer"
+            >
+              <ReloadIcon /> Reload Data
             </Button>
+            {isActionRequired && (
+              <Button
+                variant="solid"
+                color="red"
+                className="hover:cursor-pointer"
+                onClick={handleActButtonClick}
+              >
+                <ExclamationTriangleIcon /> Act on Spectrum
+              </Button>
+            )}
           </Flex>
           <Flex
             gap={"4"}
@@ -162,32 +192,18 @@ export default function HomeClient() {
               <Flex direction={"row"} gap={"2"} align={"center"}>
                 <Strong>Action Reqired:</Strong>
                 {isActionRequired ? (
-                  <AlertDialog.Root>
-                    <AlertDialog.Trigger>
-                      <Button color="red" className="hover:cursor-pointer">
-                        YES
-                      </Button>
-                    </AlertDialog.Trigger>
-                    <AlertDialog.Content style={{ maxWidth: 450 }}>
-                      <AlertDialog.Title>Action Required!</AlertDialog.Title>
-                      <AlertDialog.Description size="2">
-                        Something went wrong!
-                      </AlertDialog.Description>
-                      <AlertDialog.Cancel>
-                        <Flex justify={"end"} mt="4">
-                          <Button
-                            variant="soft"
-                            color="gray"
-                            className="hover:cursor-pointer"
-                          >
-                            Cancel
-                          </Button>
-                        </Flex>
-                      </AlertDialog.Cancel>
-                    </AlertDialog.Content>
-                  </AlertDialog.Root>
+                  <Button
+                    variant="solid"
+                    color="red"
+                    className="hover:cursor-pointer"
+                    onClick={handleActButtonClick}
+                  >
+                    <ExclamationTriangleIcon /> Act on Spectrum
+                  </Button>
                 ) : (
-                  <Badge color="blue">NO</Badge>
+                  <Badge color="blue" size={"2"}>
+                    NO
+                  </Badge>
                 )}
               </Flex>
             </Flex>
