@@ -62,8 +62,9 @@ export default function AssignmentAClient({ data }: Props) {
           <Header />
           <Button
             onClick={handleReloadButtonClick}
-            className={clsx("hover:cursor-pointer", {
+            className={clsx("", {
               "hover:cursor-not-allowed": isActionRequired,
+              "hover:cursor-pointer": !isActionRequired,
             })}
             disabled={data.isActionRequired}
           >
