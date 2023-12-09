@@ -92,10 +92,10 @@ export default function HomeClient() {
 
   const isActionRequired =
     liveData.isActionRequired || initialData.isActionRequired;
-
   const statusMessage = liveData.statusMessage || initialData.statusMessage;
-
   const isAscending = liveData.isAscending || initialData.isAscending;
+  const textColor = isActionRequired ? "red" : "blue";
+  const textWeight = isActionRequired ? "bold" : "medium";
 
   return (
     <>
@@ -149,19 +149,13 @@ export default function HomeClient() {
               <Separator my="1" size="4" />
               <Flex direction={"row"} gap={"2"}>
                 <Text weight={"bold"}>Message:</Text>
-                <Text
-                  color={isActionRequired ? "red" : "blue"}
-                  weight={isActionRequired ? "bold" : "medium"}
-                >
+                <Text color={textColor} weight={textWeight}>
                   {statusMessage}
                 </Text>
               </Flex>
               <Flex direction={"row"} gap={"2"}>
                 <Text weight={"bold"}>Phase of Flight:</Text>
-                <Text
-                  color={isActionRequired ? "red" : "blue"}
-                  weight={isActionRequired ? "bold" : "medium"}
-                >
+                <Text color={textColor} weight={textWeight}>
                   {isAscending ? "Ascending" : "Descending"}
                 </Text>
               </Flex>
