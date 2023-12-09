@@ -11,3 +11,5 @@ export interface KeyWithColor {
   key: string;
   color: string;
 }
+
+export type SelectedKey = "velocity" | "altitude" | "temperature";

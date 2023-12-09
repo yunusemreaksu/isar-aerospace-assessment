@@ -1,6 +1,6 @@
 import { Container } from "@radix-ui/themes";
 
-export default function HomeLayout({
+export default function AssignmentBLayout({
   children,
 }: {
   children: React.ReactNode;
