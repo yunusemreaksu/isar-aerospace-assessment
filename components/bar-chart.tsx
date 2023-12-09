@@ -1,6 +1,6 @@
 "use client";
 
-import { SpectrumStatus } from "@/types";
+import { SelectedKey, SpectrumStatus } from "@/types";
 import type { ChartData, ChartOptions } from "chart.js";
 import {
   BarElement,
@@ -33,24 +33,37 @@ export default function BarChart({
   selectedKey,
   colorVariant = "rgba(255, 99, 132, 0.5)",
 }: Props) {
+  const calculateYAxeMinMax = (
+    key: SelectedKey,
+    value: number,
+  ): { min: number; max: number } => {
+    switch (key) {
+      case "altitude":
+        if (value <= 0) {
+          const base = Math.ceil(value / 1000);
+          return {
+            max: base * 1000 + 1000,
+            min: base * 1000 - 1000,
+          };
+        }
+      case "temperature":
+        return {
+          min: -30,
+          max: 30,
+        };
+
+      case "velocity":
+        return {
+          min: -100,
+          max: 100,
+        };
+    }
+  };
+
   const scales = {
     y: {
-      min:
-        selectedKey === "altitude"
-          ? chartData.altitude >= -30000
-            ? -30000
-            : -40000
-          : selectedKey === "temperature"
-            ? -30
-            : -100,
-      max:
-        selectedKey === "altitude"
-          ? chartData.altitude >= -20000
-            ? 0
-            : -20000
-          : selectedKey === "temperature"
-            ? 30
-            : 100,
+      min: calculateYAxeMinMax(selectedKey, chartData[selectedKey]).min,
+      max: calculateYAxeMinMax(selectedKey, chartData[selectedKey]).max,
     },
   };
 
