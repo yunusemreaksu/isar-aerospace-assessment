@@ -38,6 +38,11 @@ export default function RootLayout({
                 Assignment B
               </Button>
             </Link>
+            <Link href={"/assignment-c"}>
+              <Button color="grass" className="hover:cursor-pointer">
+                Assignment C
+              </Button>
+            </Link>
           </nav>
           {children}
         </Theme>
