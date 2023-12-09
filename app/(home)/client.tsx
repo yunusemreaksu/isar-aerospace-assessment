@@ -92,11 +92,21 @@ export default function HomeClient({ data }: Props) {
           <Separator my="1" size="4" />
           <Flex direction={"row"} gap={"2"}>
             <Strong>Message:</Strong>
-            <Text>{liveData.statusMessage}</Text>
+            <Text
+              color={liveData.isActionRequired ? "red" : "blue"}
+              weight={liveData.isActionRequired ? "bold" : "medium"}
+            >
+              {liveData.statusMessage}
+            </Text>
           </Flex>
           <Flex direction={"row"} gap={"2"}>
             <Strong>Phase of Flight:</Strong>
-            <Text>{liveData.isAscending ? "Ascending" : "Descending"}</Text>
+            <Text
+              color={liveData.isActionRequired ? "red" : "blue"}
+              weight={liveData.isActionRequired ? "bold" : "medium"}
+            >
+              {liveData.isAscending ? "Ascending" : "Descending"}
+            </Text>
           </Flex>
           <Flex direction={"row"} gap={"2"} align={"center"}>
             <Strong>Action Reqired:</Strong>
