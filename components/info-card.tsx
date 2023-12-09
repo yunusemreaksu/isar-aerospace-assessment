@@ -55,7 +55,7 @@ export default function InfoCard({
   handleActButtonClick,
 }: Props) {
   return (
-    <Card style={{ width: 600 }}>
+    <Card style={{ width: 600, backgroundColor: "lightgrey" }}>
       <Flex direction={"column"} gap={"2"}>
         <Heading as="h2">Information</Heading>
         <Separator my="1" size="4" />
