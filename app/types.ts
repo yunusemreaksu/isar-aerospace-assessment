@@ -7,8 +7,7 @@ export interface SpectrumStatus {
   isActionRequired: boolean;
 }
 
-export interface KeysWithColors {
+export interface KeyWithColor {
   key: string;
   color: string;
 }
-[];

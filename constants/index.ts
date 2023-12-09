@@ -1,6 +1,6 @@
-import { KeysWithColors } from "@/app/types";
+import { KeyWithColor } from "@/app/types";
 
-export const keysWithColors: KeysWithColors[] = [
+export const keysWithColors: KeyWithColor[] = [
   {
     key: "velocity",
     color: "rgba(255, 99, 132, 0.5)",

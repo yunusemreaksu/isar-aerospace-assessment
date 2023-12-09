@@ -37,7 +37,9 @@ export default function BarChart({
     y: {
       min:
         selectedKey === "altitude"
-          ? -30000
+          ? chartData.altitude >= -30000
+            ? -30000
+            : -40000
           : selectedKey === "temperature"
             ? -30
             : -100,
