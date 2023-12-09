@@ -1,4 +1,4 @@
-import { KeyWithColor } from "@/app/types";
+import { KeyWithColor } from "@/types";
 
 export const keysWithColors: KeyWithColor[] = [
   {

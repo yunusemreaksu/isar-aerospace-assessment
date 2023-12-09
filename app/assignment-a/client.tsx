@@ -5,12 +5,12 @@ import BarChart from "@/components/bar-chart";
 import Header from "@/components/header";
 import InfoCard from "@/components/info-card";
 import { keysWithColors } from "@/constants";
+import { SelectedKey, SpectrumStatus } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex } from "@radix-ui/themes";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SelectedKey, SpectrumStatus } from "../types";
 
 type Props = {
   data: SpectrumStatus;

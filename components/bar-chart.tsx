@@ -1,5 +1,6 @@
 "use client";
 
+import { SpectrumStatus } from "@/types";
 import type { ChartData, ChartOptions } from "chart.js";
 import {
   BarElement,
@@ -11,7 +12,6 @@ import {
   Tooltip,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { SpectrumStatus } from "../app/types";
 
 type Props = {
   chartData: SpectrumStatus;

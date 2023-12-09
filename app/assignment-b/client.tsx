@@ -5,9 +5,9 @@ import BarChart from "@/components/bar-chart";
 import Header from "@/components/header";
 import InfoCard from "@/components/info-card";
 import { keysWithColors } from "@/constants";
+import { SelectedKey, SpectrumStatus } from "@/types";
 import { Box, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
-import { SelectedKey, SpectrumStatus } from "../types";
 
 export default function AssignmentBClient() {
   const [liveData, setLiveData] = useState<SpectrumStatus>({
