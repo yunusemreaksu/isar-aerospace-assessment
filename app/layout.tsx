@@ -27,7 +27,7 @@ export default function RootLayout({
           scaling="100%"
           radius="full"
         >
-          <nav className="flex items-center justify-end gap-4 border-b-2 p-4">
+          <nav className="flex items-center justify-end gap-4 border-b-2 bg-slate-300 p-4">
             <Link href={"/assignment-a"}>
               <Button color="orange" className="hover:cursor-pointer">
                 Assignment A

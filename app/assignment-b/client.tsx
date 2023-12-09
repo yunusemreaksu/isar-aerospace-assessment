@@ -1,5 +1,6 @@
 "use client";
 
+import ActAlertDialog from "@/components/act-alert-dialog";
 import BarChart from "@/components/bar-chart";
 import Header from "@/components/header";
 import InfoCard from "@/components/info-card";
@@ -17,6 +18,7 @@ export default function AssignmentBClient() {
     isAscending: false,
     isActionRequired: false,
   });
+  const [openAlerDialog, setOpenAlertDialog] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket(process.env.NEXT_PUBLIC_SPECTRUM_WS as string);
@@ -36,6 +38,14 @@ export default function AssignmentBClient() {
         isAscending: parsedData.IsAscending,
         isActionRequired: parsedData.IsActionRequired,
       });
+
+      if (parsedData.IsActionRequired) {
+        ws.onclose = () => {
+          console.log("Websocket disconnected!");
+        };
+        ws.close();
+        setOpenAlertDialog(parsedData.IsActionRequired);
+      }
     };
   }, []);
 
@@ -60,42 +70,50 @@ export default function AssignmentBClient() {
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
+
+      location.reload();
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <Flex direction={"column"} gap={"8"} align={"center"}>
-      <Flex justify={"center"} align={"center"} gap={"4"}>
-        <Header />
+    <>
+      <Flex direction={"column"} gap={"8"} align={"center"}>
+        <Flex justify={"center"} align={"center"} gap={"4"}>
+          <Header />
+        </Flex>
+        <Flex
+          gap={"4"}
+          direction={"row"}
+          justify={"between"}
+          align={"center"}
+          width={"100%"}
+          pt={"4"}
+        >
+          {keysWithColors.map((item) => (
+            <Box key={item.key}>
+              <BarChart
+                chartData={liveData}
+                selectedKey={item.key as SelectedKey}
+                colorVariant={item.color}
+              />
+            </Box>
+          ))}
+        </Flex>
+        <InfoCard
+          textColor={textColor}
+          textWeight={textWeight}
+          isAscending={isAscending}
+          statusMessage={statusMessage}
+          isActionRequired={liveData.isActionRequired}
+          handleActButtonClick={handleActButtonClick}
+        />
       </Flex>
-      <Flex
-        gap={"4"}
-        direction={"row"}
-        justify={"between"}
-        align={"center"}
-        width={"100%"}
-        pt={"4"}
-      >
-        {keysWithColors.map((item) => (
-          <Box key={item.key}>
-            <BarChart
-              chartData={liveData}
-              selectedKey={item.key as SelectedKey}
-              colorVariant={item.color}
-            />
-          </Box>
-        ))}
-      </Flex>
-      <InfoCard
-        textColor={textColor}
-        textWeight={textWeight}
-        isAscending={isAscending}
-        statusMessage={statusMessage}
-        isActionRequired={liveData.isActionRequired}
-        handleActButtonClick={handleActButtonClick}
+      <ActAlertDialog
+        openAlerDialog={openAlerDialog}
+        setOpenAlertDialog={setOpenAlertDialog}
       />
-    </Flex>
+    </>
   );
 }
