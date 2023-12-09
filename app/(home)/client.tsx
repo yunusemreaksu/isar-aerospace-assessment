@@ -1,6 +1,7 @@
 "use client";
 
 import BarChart from "@/components/bar-chart";
+import { keysWithColors } from "@/constants";
 import { ReloadIcon, RocketIcon } from "@radix-ui/react-icons";
 import {
   AlertDialog,
@@ -20,14 +21,10 @@ import { SpectrumStatus } from "../types";
 
 type Props = {
   data: SpectrumStatus;
-  keysWithColors: {
-    key: string;
-    color: string;
-  }[];
 };
 type selectedKey = "velocity" | "altitude" | "temperature";
 
-export default function HomeClient({ data, keysWithColors }: Props) {
+export default function HomeClient({ data }: Props) {
   const { refresh } = useRouter();
   const [liveData, setLiveData] = useState<SpectrumStatus>({
     velocity: 0,
@@ -39,9 +36,7 @@ export default function HomeClient({ data, keysWithColors }: Props) {
   });
 
   useEffect(() => {
-    const ws = new WebSocket(
-      "wss://webfrontendassignment-isaraerospace.azurewebsites.net/api/SpectrumWS",
-    );
+    const ws = new WebSocket(process.env.NEXT_PUBLIC_SPECTRUM_WS as string);
 
     ws.onopen = () => {
       console.log("Websocket connected!");

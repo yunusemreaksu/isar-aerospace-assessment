@@ -6,3 +6,9 @@ export interface SpectrumStatus {
   isAscending: boolean;
   isActionRequired: boolean;
 }
+
+export interface KeysWithColors {
+  key: string;
+  color: string;
+}
+[];
