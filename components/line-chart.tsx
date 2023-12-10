@@ -1,38 +1,48 @@
-"use client";
-
 import { SpectrumStatus } from "@/types";
 import { calculateYAxeMinMax } from "@/utils";
-import type { ChartData, ChartOptions } from "chart.js";
+import type { ChartOptions } from "chart.js";
 import {
-  BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
+  LineElement,
   LinearScale,
+  PointElement,
   Title,
   Tooltip,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
+
+interface LineData {
+  velocity: number;
+  altitude: number;
+  temperature: number;
+}
 
 type Props = {
   chartData: SpectrumStatus;
   selectedKey: "velocity" | "altitude" | "temperature";
-  colorVariant?: string;
+  backgroundColorVariant: string;
+  borderColorVariant: string;
+  lineValues: LineData[];
 };
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 );
 
-export default function BarChart({
+export default function LineChart({
   chartData,
   selectedKey,
-  colorVariant = "rgba(255, 99, 132, 0.5)",
+  backgroundColorVariant,
+  borderColorVariant,
+  lineValues,
 }: Props) {
   const scales = {
     y: {
@@ -41,7 +51,7 @@ export default function BarChart({
     },
   };
 
-  const options: ChartOptions<"bar"> = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -54,16 +64,30 @@ export default function BarChart({
     },
     scales,
   };
-  const labels = [selectedKey];
-  const data: ChartData<"bar"> = {
+
+  const labels = [
+    "0",
+    "500 ms",
+    "1000 ms",
+    "1500 ms",
+    "2000 ms",
+    "2500 ms",
+    "3000 ms",
+    "3500 ms",
+    "4000 ms",
+    "4500 ms",
+  ];
+
+  const data = {
     labels,
     datasets: [
       {
         label: "Data",
-        data: [chartData[selectedKey]],
-        backgroundColor: colorVariant,
+        data: lineValues.map((item) => item[selectedKey]),
+        borderColor: borderColorVariant,
+        backgroundColor: backgroundColorVariant,
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+  return <Line options={options} data={data} />;
 }

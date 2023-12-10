@@ -85,7 +85,7 @@ export default function Client({ data }: Props) {
               <BarChart
                 chartData={data}
                 selectedKey={item.key as SelectedKey}
-                colorVariant={item.color}
+                colorVariant={item.backgroundColor}
               />
             </Box>
           ))}

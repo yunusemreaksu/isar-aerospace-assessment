@@ -9,7 +9,8 @@ export interface SpectrumStatus {
 
 export interface KeyWithColor {
   key: string;
-  color: string;
+  backgroundColor: string;
+  borderColor?: string;
 }
 
 export type SelectedKey = "velocity" | "altitude" | "temperature";

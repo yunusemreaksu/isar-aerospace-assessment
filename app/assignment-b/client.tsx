@@ -4,10 +4,17 @@ import ActAlertDialog from "@/components/act-alert-dialog";
 import BarChart from "@/components/bar-chart";
 import Header from "@/components/header";
 import InfoCard from "@/components/info-card";
+import LineChart from "@/components/line-chart";
 import { keysWithColors } from "@/constants";
 import { SelectedKey, SpectrumStatus } from "@/types";
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Button, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
+
+interface LineData {
+  velocity: number;
+  altitude: number;
+  temperature: number;
+}
 
 export default function Client() {
   const [liveData, setLiveData] = useState<SpectrumStatus>({
@@ -19,6 +26,12 @@ export default function Client() {
     isActionRequired: false,
   });
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
+  const [chartMode, setChartMode] = useState<"bar" | "line">("line");
+  const [lineData, setLineData] = useState<LineData[]>([]);
+
+  if (lineData.length === 11) {
+    setLineData(lineData.slice(1));
+  }
 
   useEffect(() => {
     const ws = new WebSocket(process.env.NEXT_PUBLIC_SPECTRUM_WS as string);
@@ -38,6 +51,15 @@ export default function Client() {
         isAscending: parsedData.IsAscending,
         isActionRequired: parsedData.IsActionRequired,
       });
+
+      setLineData((prev) => [
+        ...prev,
+        {
+          velocity: parsedData.Velocity,
+          altitude: parsedData.Altitude,
+          temperature: parsedData.Temperature,
+        },
+      ]);
 
       if (parsedData.IsActionRequired) {
         ws.onclose = () => {
@@ -68,7 +90,7 @@ export default function Client() {
       );
 
       if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
+        throw new Error(`Error! Status: ${response.status}`);
       }
 
       location.reload();
@@ -77,11 +99,25 @@ export default function Client() {
     }
   };
 
+  const handleModeButtonClick = () => {
+    if (chartMode === "bar") {
+      setChartMode("line");
+    } else {
+      setChartMode("bar");
+    }
+  };
+
   return (
     <>
       <Flex direction={"column"} gap={"8"} align={"center"}>
         <Flex justify={"center"} align={"center"} gap={"4"}>
           <Header />
+          <Button
+            className="capitalize hover:cursor-pointer"
+            onClick={handleModeButtonClick}
+          >
+            mode: {chartMode === "bar" ? "bar" : "line"}
+          </Button>
         </Flex>
         <Flex
           gap={"4"}
@@ -93,11 +129,21 @@ export default function Client() {
         >
           {keysWithColors.map((item) => (
             <Box key={item.key}>
-              <BarChart
-                chartData={liveData}
-                selectedKey={item.key as SelectedKey}
-                colorVariant={item.color}
-              />
+              {chartMode === "bar" ? (
+                <BarChart
+                  chartData={liveData}
+                  selectedKey={item.key as SelectedKey}
+                  colorVariant={item.backgroundColor}
+                />
+              ) : (
+                <LineChart
+                  chartData={liveData}
+                  selectedKey={item.key as SelectedKey}
+                  lineValues={lineData}
+                  backgroundColorVariant={item.backgroundColor}
+                  borderColorVariant={item.borderColor as string}
+                />
+              )}
             </Box>
           ))}
         </Flex>
