@@ -52,6 +52,7 @@ export default function LineChart({
   };
 
   const options: ChartOptions<"line"> = {
+    maintainAspectRatio: false,
     responsive: true,
     plugins: {
       legend: {
@@ -89,5 +90,9 @@ export default function LineChart({
       },
     ],
   };
-  return <Line options={options} data={data} />;
+  return (
+    <div className="h-64">
+      <Line options={options} data={data} />
+    </div>
+  );
 }

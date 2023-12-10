@@ -42,6 +42,7 @@ export default function BarChart({
   };
 
   const options: ChartOptions<"bar"> = {
+    maintainAspectRatio: false,
     responsive: true,
     plugins: {
       legend: {
@@ -65,5 +66,9 @@ export default function BarChart({
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+  return (
+    <div className="h-64">
+      <Bar options={options} data={data} />
+    </div>
+  );
 }
