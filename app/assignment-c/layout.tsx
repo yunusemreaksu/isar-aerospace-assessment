@@ -1,10 +1,6 @@
 import { Container } from "@radix-ui/themes";
 
-export default function AssignmentCLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Container
       size={"4"}
