@@ -37,7 +37,7 @@ export default function RootLayout({
               gap={"3"}
             >
               <Link href={"/assignment-a"}>
-                <Button color="orange" className="hover:cursor-pointer">
+                <Button color="ruby" className="hover:cursor-pointer">
                   Assignment A
                 </Button>
               </Link>
