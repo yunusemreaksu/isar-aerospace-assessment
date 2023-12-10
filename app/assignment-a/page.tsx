@@ -1,4 +1,4 @@
-import AssignmentAClient from "./client";
+import Client from "./client";
 
 async function getData() {
   const res = await fetch(process.env.NEXT_PUBLIC_SPECTRUM_STATUS as string, {
@@ -15,5 +15,5 @@ async function getData() {
 export default async function Page() {
   const data = await getData();
 
-  return <AssignmentAClient data={data} />;
+  return <Client data={data} />;
 }

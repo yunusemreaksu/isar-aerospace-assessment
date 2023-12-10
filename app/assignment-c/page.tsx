@@ -1,5 +1,5 @@
-import AssignmentCClient from "./client";
+import Client from "./client";
 
 export default async function Page() {
-  return <AssignmentCClient />;
+  return <Client />;
 }

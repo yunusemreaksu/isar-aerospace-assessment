@@ -9,7 +9,7 @@ import { SelectedKey, SpectrumStatus } from "@/types";
 import { Box, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 
-export default function AssignmentBClient() {
+export default function Client() {
   const [liveData, setLiveData] = useState<SpectrumStatus>({
     velocity: 0,
     altitude: 0,

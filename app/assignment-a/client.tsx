@@ -16,7 +16,7 @@ type Props = {
   data: SpectrumStatus;
 };
 
-export default function AssignmentAClient({ data }: Props) {
+export default function Client({ data }: Props) {
   const { refresh } = useRouter();
 
   const isActionRequired = data.isActionRequired;
