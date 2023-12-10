@@ -1,4 +1,5 @@
-import { Button, Theme } from "@radix-ui/themes";
+import IsarIcon from "@/icons/isar";
+import { Button, Flex, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -27,22 +28,30 @@ export default function RootLayout({
           scaling="100%"
           radius="full"
         >
-          <nav className="flex items-center justify-end gap-4 border-b-2 bg-slate-300 p-4">
-            <Link href={"/assignment-a"}>
-              <Button color="orange" className="hover:cursor-pointer">
-                Assignment A
-              </Button>
-            </Link>
-            <Link href={"/assignment-b"}>
-              <Button color="cyan" className="hover:cursor-pointer">
-                Assignment B
-              </Button>
-            </Link>
-            <Link href={"/assignment-c"}>
-              <Button color="grass" className="hover:cursor-pointer">
-                Assignment C
-              </Button>
-            </Link>
+          <nav className="flex items-center justify-between border-b-2 bg-slate-300 p-4">
+            <IsarIcon />
+            <Flex
+              justify={"between"}
+              align={"center"}
+              direction={"row"}
+              gap={"3"}
+            >
+              <Link href={"/assignment-a"}>
+                <Button color="orange" className="hover:cursor-pointer">
+                  Assignment A
+                </Button>
+              </Link>
+              <Link href={"/assignment-b"}>
+                <Button color="cyan" className="hover:cursor-pointer">
+                  Assignment B
+                </Button>
+              </Link>
+              <Link href={"/assignment-c"}>
+                <Button color="grass" className="hover:cursor-pointer">
+                  Assignment C
+                </Button>
+              </Link>
+            </Flex>
           </nav>
           {children}
         </Theme>
