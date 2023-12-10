@@ -23,7 +23,7 @@ export default function Client({ data }: Props) {
   const textColor = isActionRequired ? "red" : "blue";
   const textWeight = isActionRequired ? "bold" : "medium";
 
-  const [openAlerDialog, setOpenAlertDialog] = useState(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   useEffect(() => {
     setOpenAlertDialog(isActionRequired);
@@ -100,7 +100,7 @@ export default function Client({ data }: Props) {
         />
       </Flex>
       <ActAlertDialog
-        openAlerDialog={openAlerDialog}
+        openAlertDialog={openAlertDialog}
         setOpenAlertDialog={setOpenAlertDialog}
       />
     </>

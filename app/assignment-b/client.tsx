@@ -18,7 +18,7 @@ export default function Client() {
     isAscending: false,
     isActionRequired: false,
   });
-  const [openAlerDialog, setOpenAlertDialog] = useState(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket(process.env.NEXT_PUBLIC_SPECTRUM_WS as string);
@@ -111,7 +111,7 @@ export default function Client() {
         />
       </Flex>
       <ActAlertDialog
-        openAlerDialog={openAlerDialog}
+        openAlertDialog={openAlertDialog}
         setOpenAlertDialog={setOpenAlertDialog}
       />
     </>

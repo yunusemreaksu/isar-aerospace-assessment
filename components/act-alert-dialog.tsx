@@ -1,16 +1,16 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 
 type Props = {
-  openAlerDialog: boolean;
+  openAlertDialog: boolean;
   setOpenAlertDialog: (openState: boolean) => void;
 };
 
 export default function ActAlertDialog({
-  openAlerDialog,
+  openAlertDialog,
   setOpenAlertDialog,
 }: Props) {
   return (
-    <AlertDialog.Root open={openAlerDialog} onOpenChange={setOpenAlertDialog}>
+    <AlertDialog.Root open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
       <AlertDialog.Content style={{ maxWidth: 450 }}>
         <AlertDialog.Title>Caution!</AlertDialog.Title>
         <AlertDialog.Description size="3">
