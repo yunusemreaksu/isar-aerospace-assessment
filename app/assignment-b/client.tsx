@@ -32,7 +32,7 @@ export default function Client() {
   const [lineData, setLineData] = useState<LineData[]>([]);
 
   if (lineData.length === 11) {
-    setLineData(lineData.slice(1));
+    setLineData((prev) => [...prev].slice(1));
   }
 
   useEffect(() => {
@@ -170,6 +170,7 @@ export default function Client() {
       <ActAlertDialog
         openAlertDialog={openAlertDialog}
         setOpenAlertDialog={setOpenAlertDialog}
+        handleActButtonClick={handleActButtonClick}
       />
     </>
   );

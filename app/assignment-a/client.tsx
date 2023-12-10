@@ -46,7 +46,7 @@ export default function Client({ data }: Props) {
       );
 
       if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
+        throw new Error(`Error! Status: ${response.status}`);
       }
 
       refresh();
@@ -68,7 +68,7 @@ export default function Client({ data }: Props) {
             })}
             disabled={data.isActionRequired}
           >
-            <ReloadIcon />{" "}
+            <ReloadIcon />
             {isActionRequired ? "Action Reqired!" : "Reload Data"}
           </Button>
         </Flex>
@@ -102,6 +102,7 @@ export default function Client({ data }: Props) {
       <ActAlertDialog
         openAlertDialog={openAlertDialog}
         setOpenAlertDialog={setOpenAlertDialog}
+        handleActButtonClick={handleActButtonClick}
       />
     </>
   );
