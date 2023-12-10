@@ -16,6 +16,8 @@ interface LineData {
   temperature: number;
 }
 
+type ChartMode = "bar" | "line";
+
 export default function Client() {
   const [liveData, setLiveData] = useState<SpectrumStatus>({
     velocity: 0,
@@ -26,7 +28,7 @@ export default function Client() {
     isActionRequired: false,
   });
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
-  const [chartMode, setChartMode] = useState<"bar" | "line">("line");
+  const [chartMode, setChartMode] = useState<ChartMode>("line");
   const [lineData, setLineData] = useState<LineData[]>([]);
 
   if (lineData.length === 11) {
@@ -71,6 +73,13 @@ export default function Client() {
     };
   }, []);
 
+  useEffect(() => {
+    const localItem = localStorage.getItem("chartMode") as ChartMode;
+    if (localItem) {
+      setChartMode(localItem);
+    }
+  }, []);
+
   const isActionRequired = liveData.isActionRequired;
   const statusMessage = liveData.statusMessage;
   const isAscending = liveData.isAscending;
@@ -101,8 +110,10 @@ export default function Client() {
 
   const handleModeButtonClick = () => {
     if (chartMode === "bar") {
+      localStorage.setItem("chartMode", "line");
       setChartMode("line");
     } else {
+      localStorage.setItem("chartMode", "bar");
       setChartMode("bar");
     }
   };
