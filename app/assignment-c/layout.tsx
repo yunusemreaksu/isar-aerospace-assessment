@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Container
       size={"4"}
       pt={"4"}
-      className="h-[calc(100vh-64px)] bg-slate-100"
+      className="h-[calc(100vh-76px)] bg-slate-100"
     >
       {children}
     </Container>
