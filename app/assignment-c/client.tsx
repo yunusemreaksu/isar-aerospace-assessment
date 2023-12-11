@@ -35,9 +35,10 @@ export default function Client() {
           </Text>
           <Text size={"3"} as="p">
             4. Incoming statusMessages may be more descriptive. For example, it
-            can be stated more clearly whether Spectrum is currently facing a
-            problem or not. Thus, more accurate warnings can be shown to the
-            user.
+            can be stated more clearly whether Spectrum is currently
+            experiencing a problem, and if so, what type of problem it is and
+            what data type it is related to (velocity, altitude, temperature).
+            Thus, more accurate warnings can be shown to the user.
           </Text>
         </Flex>
       </Card>

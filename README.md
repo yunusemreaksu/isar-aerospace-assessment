@@ -26,4 +26,4 @@ These are my comments about assignment C:
 - It would be nice if it was stated whether the returned numerical values are based on the imperial or metric system.
 - Again, it is not clear in which unit the numerical values are returned. It would be good to specify this in the API to display more accurate data.
 - If items 2 and 3 are specified in the API, the incoming data can be displayed according to the country where the user is located.
-- Incoming statusMessages may be more descriptive. For example, it can be stated more clearly whether Spectrum is currently facing a problem or not. Thus, more accurate warnings can be shown to the user.
+- Incoming statusMessages may be more descriptive. For example, it can be stated more clearly whether Spectrum is currently experiencing a problem, and if so, what type of problem it is and what data type it is related to (velocity, altitude, temperature). Thus, more accurate warnings can be shown to the user.
