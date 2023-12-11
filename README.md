@@ -7,6 +7,8 @@ Each assignment can be accessed from the navigation bar.
 
 - Opinions and suggestions on improving the API are presented in Assignment C and this README file.
 
+- The .env file is not added to .gitignore so that the application can run locally without any problems.
+
 ## Getting Started
 
 First, run the development server:
