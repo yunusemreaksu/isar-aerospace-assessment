@@ -1,4 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a Next.js project containing Isar Aerospace assignments (A, B, C).
+Each assignment can be accessed from the navigation bar.
+
+- Assignment A only has a bar chart. If the user wants to see new data, user should use the reload button. If isActionReqired is true in the response returned from the API, the reload button will not be activated unless the user presses the Act on Spectrum button.
+
+- In Assignment B, live data is provided to the user via websocket. The user is offered two different chart modes, bar and line, and can switch between these modes via the button. The user's last mode selection is saved to localStorage. If isActionReqired is true in the response returned from the API, live data flow is stopped until the Act on Spectrum button is pressed again so that the user can see the last incoming data.
+
+- Opinions and suggestions on improving the API are presented in Assignment C and this README file.
 
 ## Getting Started
 
@@ -13,10 +20,6 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Assignment C
 
