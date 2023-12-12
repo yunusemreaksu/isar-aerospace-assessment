@@ -40,6 +40,10 @@ export default function Client() {
             what data type it is related to (velocity, altitude, temperature).
             Thus, more accurate warnings can be shown to the user.
           </Text>
+          <Text size={"3"} as="p">
+            5. Since the ActOnSpectrum endpoint requires action, I think it
+            should be a POST endpoint instead of GET.
+          </Text>
         </Flex>
       </Card>
     </Flex>
