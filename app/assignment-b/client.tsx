@@ -102,7 +102,41 @@ export default function Client() {
         throw new Error(`Error! Status: ${response.status}`);
       }
 
-      location.reload();
+      const ws = new WebSocket(process.env.NEXT_PUBLIC_SPECTRUM_WS as string);
+
+      ws.onopen = () => {
+        console.log("Websocket connected!");
+      };
+
+      ws.onmessage = (event) => {
+        const parsedData = JSON.parse(event.data);
+
+        setLiveData({
+          velocity: parsedData.Velocity,
+          altitude: parsedData.Altitude,
+          temperature: parsedData.Temperature,
+          statusMessage: parsedData.StatusMessage,
+          isAscending: parsedData.IsAscending,
+          isActionRequired: parsedData.IsActionRequired,
+        });
+
+        setLineData((prev) => [
+          ...prev,
+          {
+            velocity: parsedData.Velocity,
+            altitude: parsedData.Altitude,
+            temperature: parsedData.Temperature,
+          },
+        ]);
+
+        if (parsedData.IsActionRequired) {
+          ws.onclose = () => {
+            console.log("Websocket disconnected!");
+          };
+          ws.close();
+          setOpenAlertDialog(parsedData.IsActionRequired);
+        }
+      };
     } catch (error) {
       console.log(error);
     }
